@@ -110,7 +110,7 @@ for (ii in seq_along(chromosomes)){
   
 chr <- 23
 non.PAR.list <- fread("/fs/projects/ukbb/yu/ukb_imp_chrX_snplist.txt")
-if(file.exisits(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/regions/merged_region_1mb.txt",trait, chr))){
+if(file.exisits(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%s/regions/merged_region_1mb.txt",trait, chr))){
 regions <- read.table(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/regions/merged_region_1mb.txt",
                               trait, chr), header = FALSE)
 res.x <- subset(res, CHR == chr)
