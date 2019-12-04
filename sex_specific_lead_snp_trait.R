@@ -16,7 +16,7 @@ res.c <- fread(sprintf("BOLT_sex_combined_s343695_WhiteBritish.%s.bgen.stats.gz"
 
 for(ii in seq_along(chromosomes)){
   chr <- chromosomes[ii]
-  lead.snp <- read.table(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/lead_snp_cond/causal_SNP_chr%d_cond_FINEMAP.txt", trait, chr, chr),
+  lead.snp <- read.table(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/lead_snp_cond/lead_snps_cond_chr%d.txt", trait, chr, chr),
                          header = FALSE, stringsAsFactors = FALSE)
   lead.snp.female <- subset(res.f, SNP %in% lead.snp[,1])
   write.table(lead.snp.female, sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/lead_snp_cond/BOLT_female_res_lead_snps_cond_chr%d.txt",trait, chr, chr),
