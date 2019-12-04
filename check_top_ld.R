@@ -9,24 +9,28 @@ need_merge <- c()
 
 for(ii in 1:length(chromosomes)){
   chr <- chromosomes[ii]
-  ld <- read.table( sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/ld/top_snp_sex_combined_win_1mb.ld",trait, chr), header = FALSE)
-  ld <- ld^2
-  ld <- as.matrix(ld)
-  z <- read.table(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/z_files/top_snp_sex_combined_%s_chr%d_wim_1mb.z",trait, chr, trait, chr), header = TRUE, stringsAsFactors = FALSE)
-  rownames(ld) <- z$rsid
-  colnames(ld) <- z$rsid
-  get_upper_tri<-function(cormat){
-    cormat[lower.tri(cormat)] <- NA
-    return(cormat)
+  if(file.exists(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/ld/top_snp_sex_combined_win_1mb.ld",trait, chr))){
+    ld <- read.table( sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/ld/top_snp_sex_combined_win_1mb.ld",trait, chr), header = FALSE)
+    ld <- ld^2
+    ld <- as.matrix(ld)
+    z <- read.table(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/z_files/top_snp_sex_combined_%s_chr%d_wim_1mb.z",trait, chr, trait, chr), header = TRUE, stringsAsFactors = FALSE)
+    rownames(ld) <- z$rsid
+    colnames(ld) <- z$rsid
+    get_upper_tri<-function(cormat){
+      cormat[lower.tri(cormat)] <- NA
+      return(cormat)
+    }
+    ld_upper <- get_upper_tri(ld) 
+    for (jj in 1:nrow(ld_upper)){
+      ld_upper[jj,jj] <- NA
+    }
+    print(paste("The largest ld^2 value on chromosome", chr, "is", max(ld_upper, na.rm = TRUE)))
+    print("Any LD^2 > 0.1?")
+    print(any(ld_upper > 0.1, na.rm = TRUE))
+    need_merge[ii] <- any(ld_upper > 0.1, na.rm = TRUE)
   }
-  ld_upper <- get_upper_tri(ld) 
-  for (jj in 1:nrow(ld_upper)){
-    ld_upper[jj,jj] <- NA
-  }
-  print(paste("The largest ld^2 value on chromosome", chr, "is", max(ld_upper, na.rm = TRUE)))
-  print("Any LD^2 > 0.1?")
-  print(any(ld_upper > 0.1, na.rm = TRUE))
-  need_merge[ii] <- any(ld_upper > 0.1, na.rm = TRUE)
+  else
+    need_merge[ii] <- FALSE
 }
 
 names(need_merge) <- 1:23
