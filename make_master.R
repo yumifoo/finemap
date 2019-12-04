@@ -26,14 +26,14 @@ res <- res[res$MAF > maf, ]
 for (ii in seq_along(chromosomes)){
   chr <- chromosomes[ii]
   if(file.exists(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/regions/merged_region_1mb.txt",trait, chr))){
-  regions <- read.table(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/regions/merged_region_1mb.txt",
-                                trait, chr), header = FALSE)
-  auto.res <- subset(res, CHR == chr)
-  filenames <- c()
-  infile.ld <- c()
-  infile.finemap <- c()
-  
-  for (jj in 1:nrow(regions)){
+    regions <- read.table(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/regions/merged_region_1mb.txt",
+                                  trait, chr), header = FALSE)
+    auto.res <- subset(res, CHR == chr)
+    filenames <- c()
+    infile.ld <- c()
+    infile.finemap <- c()
+    
+    for (jj in 1:nrow(regions)){
     subres <- subset(auto.res, BP > regions[jj,1] & BP < regions[jj,2])
     output <- sprintf("BOLT_sex_combined_s343695_WhiteBritish_MAF_0.01_%s_chr%d_%d_%d",
                       trait, chr,regions[jj,1],regions[jj,2])
@@ -99,7 +99,7 @@ for (ii in seq_along(chromosomes)){
                                   trait, chr, chr, regions[jj,1], regions[jj,2])
     write.table(infile.finemap, file = sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/chr%d/finemap/finemap_cond_list.txt",trait,chr),
                 quote = FALSE, row.names = FALSE, col.names = FALSE)
-  }
+    }
   }
 }
   
