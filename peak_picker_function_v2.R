@@ -10,7 +10,12 @@ peak_picker <- function(data, window_mb, plot_step =FALSE){
   it <- c()
   for(i in 1:nrow(data)){
     if(min(data$PVAL, na.rm = TRUE) < 5e-8){
-      sig <- data[which.min(data$PVAL),]
+      if(min(data$PVAL, na.rm = TRUE) < 1e-299){
+        sig <- subset(data, CHISQ == max(data$CHISQ, na.rm=TRUE))
+      }
+      else{
+        sig <- data[which.min(data$PVAL),]
+      }
       bp <- sig$BP
       it <- rep(i, length(bp))
       pos <- cbind(it, bp-window_bp, bp, bp+window_bp)
@@ -26,7 +31,7 @@ peak_picker <- function(data, window_mb, plot_step =FALSE){
             geom_point(data = sig, stat = "identity",
                        position = "identity", color = "#56B4E9", size = 2) +
             ggtitle(paste("region", (bp-window_bp)[j], "to", (bp+window_bp)[j], ", SNP", sig$SNP, bp[j], "BP"))
-          # manhattan plot show the whole x chromosome
+          # manhattan plot show the whole chromosome
           plot2 <- ggplot(data,aes(x = BP, y = -log10(PVAL)))+
             geom_point(alpha = 0.8, size = 1.3, colour = "#999999")+
             geom_hline(yintercept=-log10(5e-8),linetype="dashed", color = "red")+
