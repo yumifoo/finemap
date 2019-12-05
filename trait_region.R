@@ -21,7 +21,8 @@ res <- fread(sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/BOLT_sex_combined_
 res$MAF <- ifelse(res$A1FREQ < 0.5, res$A1FREQ, 1-res$A1FREQ)
 res <- res[res$MAF > maf, ]
 res$P_BOLT_LMM_INF <- as.numeric(res$P_BOLT_LMM_INF)
-dat <- res[,.(SNP, CHR, BP, P_BOLT_LMM_INF)]
+dat <- res[,.(SNP, CHR, BP, CHISQ_BOLT_LMM_INF, P_BOLT_LMM_INF)]
+setnames(dat, old = "CHISQ_BOLT_LMM_INF ", new = "CHISQ")
 setnames(dat, old = "P_BOLT_LMM_INF", new = "PVAL")
 print(trait)
 print(table(dat$CHR))
