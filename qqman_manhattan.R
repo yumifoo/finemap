@@ -12,8 +12,7 @@ df <- data.frame(SNP = res$SNP,
                  CHR = res$CHR,
                  BP = res$BP,
                  P = as.numeric(res$P_BOLT_LMM_INF))
-
-df[df$P<1e-323,]$P <- 1e-323
+df$P <- ifelse(df$P>1e-323,df$P,1e-323)
 
 png(filename = sprintf("%s/plots/manhattan_plot_%s_sex_combined.png", trait, trait),
         width = 12, height = 7, units="in", res = 300)

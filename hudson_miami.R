@@ -19,13 +19,13 @@ gwas.f <- data.frame(SNP = female$SNP,
                      CHR = female$CHR,
                      POS = female$BP,
                      pvalue = as.numeric(female$P_BOLT_LMM_INF))
-gwas.f[gwas.f$pvalue<1e-323,]$pvalue <- 1e-323
+gwas.f$pvalue <- ifelse(gwas.f$pvalue<1e-323,gwas.f$pvalue,1e-323)
 
 gwas.m <- data.frame(SNP = male$SNP,
                      CHR = male$CHR,
                      POS = male$BP,
                      pvalue = as.numeric(male$P_BOLT_LMM_INF))
-gwas.m[gwas.m$pvalue<1e-323,]$pvalue <- 1e-323
+gwas.m$pvalue <- ifelse(gwas.m$pvalue<1e-323,gwas.m$pvalue,1e-323)
 
 p <- gmirror(top = gwas.f, bottom = gwas.m,
         tline = 5e-8, bline = 5e-8,
