@@ -62,6 +62,18 @@ for(jj in 1:nrow(regions)){
   write.table(master, file = sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/PAR/master/master_PAR_%d_%d",
                                      trait, regions[jj,1], regions[jj,2]),
               quote = FALSE, row.names = FALSE, col.names = TRUE, sep = ";")
-  #
+  ############ make ld commands ################
+  command_ld <- sprintf("/fs/projects/ukbb/christian/binaries/150419/ldstore_v2.0b_x86_64 --in-files /fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/PAR/master/master_PAR_%d_%d --write-bcor --write-bdose --n-threads 50 --cpu-mem 100",
+                        trait, regions[jj,1], regions[jj,2])
+  write.table(command_ld,sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/PAR/ld/ldstore_PAR_%d_%d.sh",
+                                 trait, regions[jj,1], regions[jj,2]), 
+              quote = FALSE, row.names = FALSE, col.names = "#!/bin/bash")
+  ########### make finemap commands #############
+  command_finemap <- sprintf("/fs/projects/ukbb/christian/binaries/180419/finemap_v1.4_x86_64 --cond --in-files /fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/PAR/master/master_PAR_%d_%d --log --n-causal-snps 30", 
+                             trait, regions[jj,1], regions[jj,2])
+  write.table(command_finemap, sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/PAR/finemap/finemap_cond_PAR_%d_%d.sh",
+                                       trait, regions[jj,1], regions[jj,2]),
+              quote = FALSE, row.names = FALSE, col.names = "#!/bin/bash")
+                             
 }
 
