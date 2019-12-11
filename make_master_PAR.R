@@ -29,7 +29,9 @@ for(jj in 1:nrow(regions)){
                   maf = subres$MAF,
                   beta = subres$BETA,
                   se = subres$SE)
-  write.table(z, paste0(output,".z"), col.names = TRUE, row.names = FALSE, quote = FALSE)
+  write.table(z, sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/%s/sex_combined/PAR/z_files/%s.z",
+                         trait,output), 
+              col.names = TRUE, row.names = FALSE, quote = FALSE)
   
   ####### make master files for each region ########
   
