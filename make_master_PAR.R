@@ -44,7 +44,7 @@ for(jj in 1:nrow(regions)){
   bgen <- "/fs/projects/ukbb/geno_v3/ukb_imp_chrXY_v3.bgen"
   bgi <- "/fs/projects/ukbb/geno_v3/ukb_imp_chrXY_v3.bgen.bgi"
   sample <- "/fs/projects/ukbb/geno_v3/ukb22627_imp_chrXY_v3_s486429.sample"
-  incl <- sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/sex_combined_BOLT_%s.incl",trait)
+  incl <- sprintf("/fs/projects/ukbb/yu/BOLT_basicQT_agesq/sex_combined_BOLT_PAR_%s.incl",trait)
   n_samples <- as.integer(system2("wc",
                                   args = c("-l",
                                            incl,
