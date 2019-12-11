@@ -16,7 +16,7 @@ source("/fs/projects/ukbb/yu/src/BOLT2z.R")
 # Read in results                               #
 # Adding MAF column and filtering out MAF<0.01  #
 ##################################################
-res <- fread(sprintf("/fs/projects/ukbb/yu/BOLT_biomarkers_agesq/BOLT_sex_combined_s340951_WhiteBritish.%s.bgen.stats.gz", trait))
+res <- fread(sprintf("/fs/projects/ukbb/yu/BOLT_biomarkers_agesq/BOLT_sex_combined_s340951_unrelated_WhiteBritish.%s.bgen.stats.gz", trait))
 res <- subset(res, CHR == chr)
 res$MAF <- ifelse(res$A1FREQ < 0.5, res$A1FREQ, 1-res$A1FREQ)
 res <- res[res$MAF > maf, ]
