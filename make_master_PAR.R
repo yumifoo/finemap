@@ -15,7 +15,7 @@ res <- res[res$MAF > maf, ]
 par.list <- fread("/fs/projects/ukbb/yu/ukb_imp_chrXY_snplist.txt")
 
 res.par <- subset(res, SNP %in% par.list$rsid)
-res.par$CHR[res.par$SNP %in% par.list$rsid] <- par.list$chromosome
+res.par$CHR <- rep("XY",nrow(res.par))
 
 for(jj in 1:nrow(regions)){
   subres <- subset(res.par, BP > regions[jj,1] & BP < regions[jj,2])
